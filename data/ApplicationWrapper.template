@@ -1,0 +1,16 @@
+package {{package_name}};
+
+import android.os.Bundle;
+import android.content.Context;
+import org.mockito.Mockito;
+
+public class {{class_name}}Wrapper {
+	
+	public static void main(String[] args) {
+		{{class_name}} A = new {{class_name}}({{init_args}});
+		A.{{entry_point}}({{entry_args}});
+		//Bundle bd = new Bundle();
+		Bundle bd = Mockito.mock(Bundle.class);
+		(new MainActivity()).onCreate(bd);
+	}
+}

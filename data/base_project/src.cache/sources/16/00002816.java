@@ -1,0 +1,36 @@
+package javax.sip;
+
+import java.util.Collection;
+import java.util.Iterator;
+import javax.sip.address.Router;
+
+/* loaded from: SipStack.class */
+public interface SipStack {
+    ListeningPoint createListeningPoint(int i, String str) throws TransportNotSupportedException, InvalidArgumentException;
+
+    ListeningPoint createListeningPoint(String str, int i, String str2) throws TransportNotSupportedException, InvalidArgumentException;
+
+    void deleteListeningPoint(ListeningPoint listeningPoint) throws ObjectInUseException;
+
+    SipProvider createSipProvider(ListeningPoint listeningPoint) throws ObjectInUseException;
+
+    void deleteSipProvider(SipProvider sipProvider) throws ObjectInUseException;
+
+    Collection getDialogs();
+
+    String getIPAddress();
+
+    Iterator getListeningPoints();
+
+    Router getRouter();
+
+    Iterator getSipProviders();
+
+    String getStackName();
+
+    boolean isRetransmissionFilterActive();
+
+    void start() throws ProviderDoesNotExistException, SipException;
+
+    void stop();
+}

@@ -1,0 +1,54 @@
+package android.ddm;
+
+import java.nio.ByteBuffer;
+import org.apache.harmony.dalvik.ddmc.Chunk;
+import org.apache.harmony.dalvik.ddmc.ChunkHandler;
+import org.apache.harmony.dalvik.ddmc.DdmServer;
+
+/* loaded from: DdmHandleAppName.class */
+public class DdmHandleAppName extends ChunkHandler {
+    public static final int CHUNK_APNM = type("APNM");
+    private static volatile String mAppName = "";
+    private static DdmHandleAppName mInstance = new DdmHandleAppName();
+
+    private DdmHandleAppName() {
+    }
+
+    public static void register() {
+    }
+
+    @Override // org.apache.harmony.dalvik.ddmc.ChunkHandler
+    public void connected() {
+    }
+
+    @Override // org.apache.harmony.dalvik.ddmc.ChunkHandler
+    public void disconnected() {
+    }
+
+    @Override // org.apache.harmony.dalvik.ddmc.ChunkHandler
+    public Chunk handleChunk(Chunk request) {
+        return null;
+    }
+
+    public static void setAppName(String name, int userId) {
+        if (name == null || name.length() == 0) {
+            return;
+        }
+        mAppName = name;
+        sendAPNM(name, userId);
+    }
+
+    public static String getAppName() {
+        return mAppName;
+    }
+
+    private static void sendAPNM(String appName, int userId) {
+        ByteBuffer out = ByteBuffer.allocate(4 + (appName.length() * 2) + 4);
+        out.order(ChunkHandler.CHUNK_ORDER);
+        out.putInt(appName.length());
+        putString(out, appName);
+        out.putInt(userId);
+        Chunk chunk = new Chunk(CHUNK_APNM, out);
+        DdmServer.sendChunk(chunk);
+    }
+}

@@ -1,0 +1,8 @@
+package gov.nist.javax.sip.stack;
+
+import gov.nist.javax.sip.message.SIPMessage;
+
+/* loaded from: RawMessageChannel.class */
+public interface RawMessageChannel {
+    void processMessage(SIPMessage sIPMessage) throws Exception;
+}
